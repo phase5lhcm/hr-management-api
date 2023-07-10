@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class HRAuthException extends RuntimeException {
 
     public HRAuthException(String errorMessage){
-        super();
+        super(errorMessage);
     }
 }
