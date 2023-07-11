@@ -6,6 +6,6 @@ import com.portfolioprj.humanresourcemanagementapi.exceptions.HRAuthException;
 public interface EmployeeService {
     Employee validateEmployee(String email, String password) throws HRAuthException;
 
-    Employee registerEmployee(String firstName, String lastName, String email,
+    Employee registerEmployee(String firstName, String lastName, String address, String email,
                               String password) throws HRAuthException;
 }

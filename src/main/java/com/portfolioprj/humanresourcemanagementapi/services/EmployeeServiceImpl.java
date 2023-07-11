@@ -22,7 +22,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee registerEmployee(String firstName, String lastName, String email, String password) throws HRAuthException {
+    public Employee registerEmployee(String firstName, String lastName, String address, String email, String password) throws HRAuthException {
         Pattern matchEmailFormat = Pattern.compile("^(.+)@(.+)$");
         if(email != null) email = email.toLowerCase();
         if(!matchEmailFormat.matcher(email).matches())
@@ -30,7 +30,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         Integer emailExistCount = employeeRepository.getCountByEmail(email);
         if(emailExistCount > 0)
             throw new HRAuthException("That email is already in use. Please login or create a new account");
-        Integer emplid = employeeRepository.createEmployee(firstName, lastName, email, password);
+        Integer emplid = employeeRepository.createEmployee(firstName, lastName,address, email, password);
         return employeeRepository.findById(emplid);
     }
 }

@@ -4,16 +4,25 @@ public class Employee {
     private Integer emplid;
     private String firstName;
 
-    public Employee(Integer emplid, String firstName, String lastName, String email, String password) {
+    public Employee(Integer emplid, String firstName, String lastName, String address, String email, String password) {
         this.emplid = emplid;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.address = address;
         this.email = email;
         this.password = password;
     }
 
     public Integer getEmplid() {
         return emplid;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public void setEmplid(Integer emplid) {
@@ -53,6 +62,9 @@ public class Employee {
     }
 
     private String lastName;
+
+    private String address;
+
     private String email;
     private String password;
 }

@@ -24,10 +24,11 @@ public class EmployeeResource {
     public ResponseEntity<Map<String, String>> registerEmployee(@RequestBody Map<String, Object> userMap){
         String firstName = (String) userMap.get("firstName");
         String lastName = (String) userMap.get("lastName");
+        String address = (String) userMap.get("address");
         String email = (String) userMap.get("email");
         String password = (String) userMap.get("password");
 
-        Employee employee = employeeService.registerEmployee(firstName, lastName, email, password);
+        Employee employee = employeeService.registerEmployee(firstName, lastName, address, email, password);
         Map<String, String> map = new HashMap<>();
         map.put("message", "new employee created successfully");
         return new ResponseEntity<>(map, HttpStatus.OK);

@@ -6,7 +6,7 @@ import com.portfolioprj.humanresourcemanagementapi.exceptions.HRAuthException;
 public interface EmployeeRepository {
 
     // creates employee id
-    Integer createEmployee(String firstName, String lastName, String email, String password) throws HRAuthException;
+    Integer createEmployee(String firstName, String lastName, String address, String email, String password) throws HRAuthException;
 
     Employee findByEmailAndPassword(String email, String password) throws HRAuthException;
 
