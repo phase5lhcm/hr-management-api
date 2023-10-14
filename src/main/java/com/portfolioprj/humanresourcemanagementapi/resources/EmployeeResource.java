@@ -1,7 +1,10 @@
 package com.portfolioprj.humanresourcemanagementapi.resources;
 
+import com.portfolioprj.humanresourcemanagementapi.CONSTANTS;
 import com.portfolioprj.humanresourcemanagementapi.domain.Employee;
 import com.portfolioprj.humanresourcemanagementapi.services.EmployeeService;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,10 +29,7 @@ public class EmployeeResource {
         String email = (String) employeeMap.get("email");
         String password = (String) employeeMap.get("password");
         Employee employee = employeeService.validateEmployee(email, password);
-        Map<String, String> map = new HashMap<>();
-        map.put("message: ", "Login successful");
-        // TODO -generate JWT token and return it
-        return new ResponseEntity<>(map, HttpStatus.OK);
+        return new ResponseEntity<>(generateJWT(employee), HttpStatus.OK);
     }
 
 
@@ -41,9 +42,25 @@ public class EmployeeResource {
         String password = (String) userMap.get("password");
 
         Employee employee = employeeService.registerEmployee(firstName, lastName, address, email, password);
-        Map<String, String> map = new HashMap<>();
-        map.put("message", "new employee created successfully");
-        return new ResponseEntity<>(map, HttpStatus.OK);
+        return new ResponseEntity<>(generateJWT(employee), HttpStatus.OK);
+    }
+
+    // generate a jwt token
+    private Map<String, String> generateJWT(Employee employee){
+        long timestamp = System.currentTimeMillis();
+        String token = Jwts.builder().signWith(
+                SignatureAlgorithm.HS256, CONSTANTS.API_STRING_KEY)
+                .setIssuedAt(new Date(timestamp))
+                .setExpiration(new Date(timestamp + CONSTANTS.TOKEN_VALIDITY_LENGTH))
+                .claim("emplid", employee.getEmplid())
+                .claim("email", employee.getEmail())
+                .claim("first name", employee.getFirstName())
+                .claim("last name", employee.getLastName())
+                .compact();
+        Map<String, String> jwtTokenMap = new HashMap<>();
+        jwtTokenMap.put("token", token);
+        return jwtTokenMap;
+
     }
 
 
