@@ -2,6 +2,7 @@ package com.portfolioprj.humanresourcemanagementapi.repository;
 
 import com.portfolioprj.humanresourcemanagementapi.domain.Employee;
 import com.portfolioprj.humanresourcemanagementapi.exceptions.HRAuthException;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -29,6 +30,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 
     @Override
     public Integer createEmployee(String firstName, String lastName, String address, String email, String password) throws HRAuthException {
+        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(10));
         try{
             KeyHolder keyHolder = new GeneratedKeyHolder();
             jdbcTemplate.update(con -> {
@@ -37,7 +39,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
                 ps.setString(2, lastName);
                 ps.setString(3, address);
                 ps.setString(4, email);
-                ps.setString(5, password);
+                ps.setString(5, hashedPassword);
                 return ps;
             }, keyHolder);
             return (Integer) keyHolder.getKeys().get("EMPLID");
@@ -52,7 +54,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
             // using varags method to get results since queryForObject is deprecated in Spring jdbc > 2.4X
             Employee employee = jdbcTemplate.queryForObject(SQL_FIND_EMPL_BY_EMAIL, employeeRowMapper, email);
             assert employee != null;
-            if(!password.equals(employee.getPassword()))
+            if(!BCrypt.checkpw(password, employee.getPassword()))
                 throw new HRAuthException("Invalid login credentials, please check your password");
             return employee;
         } catch (DataAccessException e){

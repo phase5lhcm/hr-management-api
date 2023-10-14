@@ -1,3 +1,4 @@
+--To comment from command line, run psql -d hrmanagementdb administrator
 DROP DATABASE IF EXISTS hrmanagementdb;
 DROP user IF EXISTS administrator;
 CREATE user administrator with password 'password';
