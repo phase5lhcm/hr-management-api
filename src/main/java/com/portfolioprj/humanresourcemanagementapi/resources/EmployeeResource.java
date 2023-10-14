@@ -20,6 +20,18 @@ public class EmployeeResource {
     @Autowired
     EmployeeService employeeService;
 
+    @PostMapping("/login")
+    public ResponseEntity<Map<String, String>> employeeLogin(@RequestBody Map<String, Object> employeeMap){
+        String email = (String) employeeMap.get("email");
+        String password = (String) employeeMap.get("password");
+        Employee employee = employeeService.validateEmployee(email, password);
+        Map<String, String> map = new HashMap<>();
+        map.put("message: ", "Login successful");
+        // TODO -generate JWT token and return it
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
+
     @PostMapping("/register")
     public ResponseEntity<Map<String, String>> registerEmployee(@RequestBody Map<String, Object> userMap){
         String firstName = (String) userMap.get("firstName");

@@ -18,13 +18,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee validateEmployee(String email, String password) throws HRAuthException {
-        return null;
+        if(email != null) email = email.toLowerCase();
+        return employeeRepository.findByEmailAndPassword(email, password);
     }
 
     @Override
     public Employee registerEmployee(String firstName, String lastName, String address, String email, String password) throws HRAuthException {
         Pattern matchEmailFormat = Pattern.compile("^(.+)@(.+)$");
         if(email != null) email = email.toLowerCase();
+        assert email != null;
         if(!matchEmailFormat.matcher(email).matches())
             throw new HRAuthException("Please use a real email address!");
         Integer emailExistCount = employeeRepository.getCountByEmail(email);
