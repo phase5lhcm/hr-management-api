@@ -1,18 +1,16 @@
 package com.portfolioprj.humanresourcemanagementapi.repository;
 
 import com.portfolioprj.humanresourcemanagementapi.domain.Employee;
-import com.portfolioprj.humanresourcemanagementapi.exceptions.HRAuthException;
+import com.portfolioprj.humanresourcemanagementapi.helpers.HRAuthException;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.sql.JDBCType;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 

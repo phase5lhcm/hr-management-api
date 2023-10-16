@@ -1,7 +1,7 @@
 package com.portfolioprj.humanresourcemanagementapi.repository;
 
 import com.portfolioprj.humanresourcemanagementapi.domain.Employee;
-import com.portfolioprj.humanresourcemanagementapi.exceptions.HRAuthException;
+import com.portfolioprj.humanresourcemanagementapi.helpers.HRAuthException;
 
 public interface EmployeeRepository {
 

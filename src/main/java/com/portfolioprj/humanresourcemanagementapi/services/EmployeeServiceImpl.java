@@ -1,7 +1,7 @@
 package com.portfolioprj.humanresourcemanagementapi.services;
 
 import com.portfolioprj.humanresourcemanagementapi.domain.Employee;
-import com.portfolioprj.humanresourcemanagementapi.exceptions.HRAuthException;
+import com.portfolioprj.humanresourcemanagementapi.helpers.HRAuthException;
 import com.portfolioprj.humanresourcemanagementapi.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

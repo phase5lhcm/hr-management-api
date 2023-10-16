@@ -1,4 +1,4 @@
-package com.portfolioprj.humanresourcemanagementapi.exceptions;
+package com.portfolioprj.humanresourcemanagementapi.helpers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
