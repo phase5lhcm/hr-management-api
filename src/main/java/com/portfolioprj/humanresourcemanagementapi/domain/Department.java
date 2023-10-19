@@ -1,20 +1,19 @@
 package com.portfolioprj.humanresourcemanagementapi.domain;
 
 public class Department {
+    public Department(int deptId, String title, String deptDesc, int deptHead) {
+        this.department_id = deptId;
+        this.dept_title = title;
+        this.description = deptDesc;
+        this.dept_head = deptHead;
+    }
+
     public Integer getDepartment_id() {
         return department_id;
     }
 
     public void setDepartment_id(Integer department_id) {
         this.department_id = department_id;
-    }
-
-    public Integer getEmplid() {
-        return emplid;
-    }
-
-    public void setEmplid(Integer emplid) {
-        this.emplid = emplid;
     }
 
     public String getDept_title() {
@@ -42,7 +41,16 @@ public class Department {
     }
 
     private Integer department_id;
-    private Integer emplid;
+
+    public Integer getDept_head() {
+        return dept_head;
+    }
+
+    public void setDept_head(Integer dept_head) {
+        this.dept_head = dept_head;
+    }
+
+    private Integer dept_head;
     private String dept_title;
     private String description;
     private String head_of_dept; // not a db row, will be generated from emplid

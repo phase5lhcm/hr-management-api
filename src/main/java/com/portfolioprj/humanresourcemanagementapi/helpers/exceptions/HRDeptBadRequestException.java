@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class HRDeptBadRequestException extends RuntimeException{
 
     public HRDeptBadRequestException(String message){
-        super(message)
+        super(message);
     }
 
 }
