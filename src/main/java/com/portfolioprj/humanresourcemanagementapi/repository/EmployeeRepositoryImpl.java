@@ -1,7 +1,7 @@
 package com.portfolioprj.humanresourcemanagementapi.repository;
 
 import com.portfolioprj.humanresourcemanagementapi.domain.Employee;
-import com.portfolioprj.humanresourcemanagementapi.helpers.HRAuthException;
+import com.portfolioprj.humanresourcemanagementapi.helpers.exceptions.HRAuthException;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
