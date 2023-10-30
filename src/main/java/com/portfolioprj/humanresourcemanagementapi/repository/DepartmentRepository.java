@@ -10,15 +10,15 @@ import java.util.List;
 
 public interface DepartmentRepository {
 
-    List<Department> findAllDepartments() throws HRDeptResourceNotFoundException;
+    List<Department> findAllDepartments(Integer userId) throws HRDeptResourceNotFoundException;
 
-    Department findDeptById(Integer dept_id) throws HRDeptResourceNotFoundException;
+    Department findDeptById(Integer emplid, Integer department_id) throws HRDeptResourceNotFoundException;
 
-    Department findDeptByEmplid(Integer emplid) throws HRDeptResourceNotFoundException;
+    Department findDeptByDepartmentManager(Integer emplid, Integer dept_head) throws HRDeptResourceNotFoundException;
 
-    Integer createDept(Integer dept_id, String dept_title, String description, Integer dept_head) throws HRDeptBadRequestException;
+    Integer createDept(String title, String description, Integer dept_head, Integer userId) throws HRDeptBadRequestException;
 
-    void updateDeptInfo(Integer dept_id, Department department) throws HRDeptBadRequestException;
+    void updateDeptInfo(Integer userId, Integer department_id, Department department) throws HRDeptBadRequestException;
 
-    void removeDeptById(Integer dept_id) throws HRDeptResourceNotFoundException;
+    void removeDeptById(Integer userId, Integer department_id) throws HRDeptResourceNotFoundException;
 }

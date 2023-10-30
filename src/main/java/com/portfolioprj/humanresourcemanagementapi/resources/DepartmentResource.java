@@ -3,6 +3,7 @@ package com.portfolioprj.humanresourcemanagementapi.resources;
 import com.portfolioprj.humanresourcemanagementapi.domain.Department;
 import com.portfolioprj.humanresourcemanagementapi.services.DepartmentService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.util.Map;
 public class DepartmentResource {
     private DepartmentService departmentService;
 
+    @Autowired
     public  DepartmentResource(DepartmentService departmentService){
         this.departmentService = departmentService;
     }
@@ -32,11 +34,11 @@ public class DepartmentResource {
     @PostMapping("/new-department")
     public ResponseEntity<Department> addDepartment(HttpServletRequest request,
                                                     @RequestBody Map<String, Object> departmentMap){
-        int dept_id = (Integer) request.getAttribute("dept_id");
         String title = (String) departmentMap.get("title");
-        String desc = (String) departmentMap.get("dept_desc");
+        String desc = (String) departmentMap.get("description");
         int dept_head = (Integer) departmentMap.get("dept_head");
-        Department department = departmentService.addDepartment(dept_id, title, desc, dept_head);
+        int emplid = (Integer) request.getAttribute("emplid");
+        Department department = departmentService.addDepartment(title, desc, dept_head, emplid);
         return new ResponseEntity<>(department, HttpStatus.CREATED);
     }
 }

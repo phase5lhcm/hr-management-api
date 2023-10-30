@@ -8,15 +8,13 @@ import java.util.List;
 
 public interface DepartmentService {
 
-    List<Department> fetchAllDepartments();
+    List<Department> fetchAllDepartments(Integer userId);
 
-    Department fetchEmployeeDepartmentByEmplid(Integer emplid) throws HRDeptResourceNotFoundException;
+    Department fetchDepartmentById(Integer userId, Integer department_id) throws HRDeptResourceNotFoundException;
 
-    Department getDeptByDeptId(Integer deptId) throws HRDeptResourceNotFoundException;
+    Department addDepartment(String title, String description, Integer dept_head, Integer userId) throws HRDeptBadRequestException;
 
-    Department addDepartment(Integer dept_id, String dept_title, String description, Integer dept_head) throws HRDeptBadRequestException;
+    void updateDepartment(Integer userId, Integer dept_id, Department department) throws HRDeptBadRequestException;
 
-    void updateDepartment(Integer dept_id, String dept_title, String dept_description) throws HRDeptBadRequestException;
-
-    void deleteDepartment(Integer dept_id) throws HRDeptResourceNotFoundException;
+    void deleteDepartment(Integer userId, Integer dept_id) throws HRDeptResourceNotFoundException;
 }

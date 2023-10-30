@@ -13,42 +13,37 @@ import java.util.List;
 @Service
 @Transactional
 public class DepartmentServiceImpl implements DepartmentService{
-    // use constructor dependency injection instead of field injection
-    private final DepartmentRepository departmentRepository;
 
+    // use constructor dependency injection instead of field injection
+   private final DepartmentRepository departmentRepository;
     @Autowired
     public DepartmentServiceImpl(DepartmentRepository departmentRepository){
         this.departmentRepository = departmentRepository;
     }
 
     @Override
-    public List<Department> fetchAllDepartments() {
+    public List<Department> fetchAllDepartments(Integer emplid) {
         return null;
     }
 
     @Override
-    public Department fetchEmployeeDepartmentByEmplid(Integer emplid) throws HRDeptResourceNotFoundException {
+    public Department fetchDepartmentById(Integer emplid, Integer department_id) throws HRDeptResourceNotFoundException {
         return null;
     }
 
     @Override
-    public Department getDeptByDeptId(Integer deptId) throws HRDeptResourceNotFoundException {
-        return null;
+    public Department addDepartment(String title, String description, Integer dept_head, Integer emplid) throws HRDeptBadRequestException {
+        int departmentId = departmentRepository.createDept(title, description, dept_head, emplid);
+        return departmentRepository.findDeptById(emplid, departmentId);
     }
 
     @Override
-    public Department addDepartment(Integer dept_id, String dept_title, String description, Integer dept_head) throws HRDeptBadRequestException {
-        int deptId = departmentRepository.createDept(dept_id, dept_title, description, dept_head);
-        return departmentRepository.findDeptById(deptId);
-    }
-
-    @Override
-    public void updateDepartment(Integer dept_id, String dept_title, String dept_description) throws HRDeptBadRequestException {
+    public void updateDepartment(Integer emplid, Integer dept_id, Department department) throws HRDeptBadRequestException {
 
     }
 
     @Override
-    public void deleteDepartment(Integer dept_id) throws HRDeptResourceNotFoundException {
+    public void deleteDepartment(Integer emplid, Integer dept_id) throws HRDeptResourceNotFoundException {
 
     }
 }

@@ -1,12 +1,7 @@
 package com.portfolioprj.humanresourcemanagementapi.domain;
 
 public class Department {
-    public Department(int deptId, String title, String deptDesc, int deptHead) {
-        this.department_id = deptId;
-        this.dept_title = title;
-        this.description = deptDesc;
-        this.dept_head = deptHead;
-    }
+    private Integer department_id;
 
     public Integer getDepartment_id() {
         return department_id;
@@ -16,12 +11,12 @@ public class Department {
         this.department_id = department_id;
     }
 
-    public String getDept_title() {
-        return dept_title;
+    public String getTitle() {
+        return title;
     }
 
-    public void setDept_title(String dept_title) {
-        this.dept_title = dept_title;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
@@ -32,16 +27,6 @@ public class Department {
         this.description = description;
     }
 
-    public String getHead_of_dept() {
-        return head_of_dept;
-    }
-
-    public void setHead_of_dept(String head_of_dept) {
-        this.head_of_dept = head_of_dept;
-    }
-
-    private Integer department_id;
-
     public Integer getDept_head() {
         return dept_head;
     }
@@ -50,10 +35,26 @@ public class Department {
         this.dept_head = dept_head;
     }
 
-    private Integer dept_head;
-    private String dept_title;
+    public Integer getEmplid() {
+        return emplid;
+    }
+
+    public void setEmplid(Integer emplid) {
+        this.emplid = emplid;
+    }
+
+    public Department(Integer department_id, String title, String description, Integer dept_head, Integer emplid) {
+        this.department_id = department_id;
+        this.title = title;
+        this.description = description;
+        this.dept_head = dept_head;
+        this.emplid = emplid;
+    }
+
+    private String title;
     private String description;
-    private String head_of_dept; // not a db row, will be generated from emplid
+    private Integer dept_head;
+    private Integer emplid; // the id of the employee with admin rights to access this & associated resources
 
 
 }

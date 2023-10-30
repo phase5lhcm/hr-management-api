@@ -1,7 +1,6 @@
 package com.portfolioprj.humanresourcemanagementapi.repository;
 
 import com.portfolioprj.humanresourcemanagementapi.domain.Department;
-import com.portfolioprj.humanresourcemanagementapi.domain.Employee;
 import com.portfolioprj.humanresourcemanagementapi.helpers.exceptions.HRDeptBadRequestException;
 import com.portfolioprj.humanresourcemanagementapi.helpers.exceptions.HRDeptResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,73 +10,78 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Objects;
 
+
 @Repository
 public class DepartmentRepositoryImpl implements DepartmentRepository{
-
     private final JdbcTemplate jdbcTemplate;
+
     @Autowired
     public DepartmentRepositoryImpl(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate = jdbcTemplate;
     }
 
-
     @Override
-    public List<Department> findAllDepartments() throws HRDeptResourceNotFoundException {
+    public List<Department> findAllDepartments(Integer emplid) throws HRDeptResourceNotFoundException {
         return null;
     }
 
     @Override
-    public Department findDeptById(Integer dept_id) throws HRDeptResourceNotFoundException {
+    public Department findDeptById(Integer emplid, Integer dept_id) throws HRDeptResourceNotFoundException {
         try {
-           return jdbcTemplate.queryForObject(QUERIES.SQL_FIND_DEPT_BY_ID, departmentRowMapper, dept_id);
+            return jdbcTemplate.queryForObject(QUERIES.SQL_FIND_DEPT_BY_ID, departmentRowMapper, emplid, dept_id);
         } catch (Exception e) {
-            throw new HRDeptResourceNotFoundException("No department was found with that id");
+            throw new RuntimeException(e);
         }
     }
 
     @Override
-    public Department findDeptByEmplid(Integer emplid) throws HRDeptResourceNotFoundException {
+    public Department findDeptByDepartmentManager(Integer emplid, Integer dept_head) throws HRDeptResourceNotFoundException {
         return null;
     }
 
     @Override
-    public Integer createDept(Integer dept_id, String dept_title, String description, Integer dept_head) throws HRDeptBadRequestException {
+    public Integer createDept(String title, String description, Integer dept_head, Integer emplid) throws HRDeptBadRequestException {
         try {
             KeyHolder keyHolder = new GeneratedKeyHolder();
-            jdbcTemplate.update(con -> {
-                PreparedStatement ps = con.prepareStatement(QUERIES.SQL_DEPT_CREATE, Statement.RETURN_GENERATED_KEYS);
-                ps.setInt(1, dept_id);
-                ps.setString(2, dept_title);
-                ps.setString(3, description);
-                ps.setInt(4, dept_head);
-                return ps;
-            }, keyHolder);
-            return (Integer) Objects.requireNonNull(keyHolder.getKeys()).get("DEPT_ID");
-        } catch (Exception e) {
-            throw new HRDeptBadRequestException("Invalid Request");
+            jdbcTemplate.update(
+                    con -> {
+                        PreparedStatement ps = con.prepareStatement(QUERIES.SQL_DEPT_CREATE, Statement.RETURN_GENERATED_KEYS);
+                        ps.setString(1, title);
+                        ps.setString(2, description);
+                        ps.setInt(3, dept_head);
+                        ps.setInt(4, emplid);
+                        return ps;
+                    }, keyHolder);
+          return (Integer) Objects.requireNonNull(keyHolder.getKeys()).get("DEPARTMENT_ID");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw new HRDeptBadRequestException("Invalid request, you may not be authorized to access this resource or you have invalid form fields");
         }
     }
 
     @Override
-    public void updateDeptInfo(Integer dept_id, Department department) throws HRDeptBadRequestException {
+    public void updateDeptInfo(Integer emplid, Integer dept_id, Department department) throws HRDeptBadRequestException {
 
     }
 
     @Override
-    public void removeDeptById(Integer deptId) {
+    public void removeDeptById(Integer emplid, Integer dept_id) throws HRDeptResourceNotFoundException {
 
     }
 
     private final RowMapper<Department> departmentRowMapper= ((rs, rowNum) -> {
         return new Department(
-                rs.getInt("DEPT_ID"),
+                rs.getInt("DEPARTMENT_ID"),
                 rs.getString("TITLE"),
-                rs.getString("DEPT_DESC"),
-                rs.getInt("DEPT_HEAD"));
+                rs.getString("DESCRIPTION"),
+                rs.getInt("DEPT_HEAD"),
+                rs.getInt("EMPLID")
+        );
     });
 }

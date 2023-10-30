@@ -33,4 +33,5 @@ build/
 .vscode/
 
 ### project ###
- src/main/java/com/portfolioprj/humanresourcemanagementapi/repository/QUERIES.java
+src/main/java/com/portfolioprj/humanresourcemanagementapi/repository/QUERIES.java
+hrmanagement_db.sql
