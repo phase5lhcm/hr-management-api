@@ -1,4 +1,4 @@
-package com.portfolioprj.humanresourcemanagementapi.domain;
+package com.portfolioprj.humanresourcemanagementapi.DAO;
 
 public class Department {
     private Integer department_id;

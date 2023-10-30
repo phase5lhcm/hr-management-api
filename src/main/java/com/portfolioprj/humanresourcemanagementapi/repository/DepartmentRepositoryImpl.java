@@ -1,6 +1,6 @@
 package com.portfolioprj.humanresourcemanagementapi.repository;
 
-import com.portfolioprj.humanresourcemanagementapi.domain.Department;
+import com.portfolioprj.humanresourcemanagementapi.DAO.Department;
 import com.portfolioprj.humanresourcemanagementapi.helpers.exceptions.HRDeptBadRequestException;
 import com.portfolioprj.humanresourcemanagementapi.helpers.exceptions.HRDeptResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,8 @@ public class DepartmentRepositoryImpl implements DepartmentRepository{
         try {
             return jdbcTemplate.queryForObject(QUERIES.SQL_FIND_DEPT_BY_ID, departmentRowMapper, emplid, dept_id);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new HRDeptResourceNotFoundException("Dept not found with this id");
         }
     }
 

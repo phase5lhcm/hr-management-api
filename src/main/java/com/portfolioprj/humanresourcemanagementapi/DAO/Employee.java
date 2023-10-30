@@ -1,4 +1,4 @@
-package com.portfolioprj.humanresourcemanagementapi.domain;
+package com.portfolioprj.humanresourcemanagementapi.DAO;
 
 public class Employee {
     private Integer emplid;

@@ -1,6 +1,6 @@
 package com.portfolioprj.humanresourcemanagementapi.services;
 
-import com.portfolioprj.humanresourcemanagementapi.domain.Department;
+import com.portfolioprj.humanresourcemanagementapi.DAO.Department;
 import com.portfolioprj.humanresourcemanagementapi.helpers.exceptions.HRDeptBadRequestException;
 import com.portfolioprj.humanresourcemanagementapi.helpers.exceptions.HRDeptResourceNotFoundException;
 

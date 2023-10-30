@@ -1,7 +1,7 @@
 package com.portfolioprj.humanresourcemanagementapi.resources;
 
 import com.portfolioprj.humanresourcemanagementapi.CONSTANTS;
-import com.portfolioprj.humanresourcemanagementapi.domain.Employee;
+import com.portfolioprj.humanresourcemanagementapi.DAO.Employee;
 import com.portfolioprj.humanresourcemanagementapi.services.EmployeeService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -31,7 +31,6 @@ public class EmployeeResource {
         Employee employee = employeeService.validateEmployee(email, password);
         return new ResponseEntity<>(generateJWT(employee), HttpStatus.OK);
     }
-
 
     @PostMapping("/register")
     public ResponseEntity<Map<String, String>> registerEmployee(@RequestBody Map<String, Object> userMap){

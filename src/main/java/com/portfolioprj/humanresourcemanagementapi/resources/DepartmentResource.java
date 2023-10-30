@@ -1,6 +1,6 @@
 package com.portfolioprj.humanresourcemanagementapi.resources;
 
-import com.portfolioprj.humanresourcemanagementapi.domain.Department;
+import com.portfolioprj.humanresourcemanagementapi.DAO.Department;
 import com.portfolioprj.humanresourcemanagementapi.services.DepartmentService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +28,14 @@ public class DepartmentResource {
         } else{
             throw new RuntimeException("An authorized user must be logged in to access this resource");
         }
+    }
+
+    @GetMapping("/{departmentId}")
+    public ResponseEntity<Department> getDepartmentById(HttpServletRequest request,
+                                                        @PathVariable("departmentId") Integer departmentId){
+        int authorizedUserId = (Integer) request.getAttribute("emplid");
+        Department department = departmentService.fetchDepartmentById(authorizedUserId, departmentId);
+        return new ResponseEntity<>(department, HttpStatus.OK);
     }
 
     // TO-DO - add authentication to only allow admin user to access these routes

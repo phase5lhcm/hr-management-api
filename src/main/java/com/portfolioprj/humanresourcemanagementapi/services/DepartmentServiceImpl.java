@@ -1,6 +1,6 @@
 package com.portfolioprj.humanresourcemanagementapi.services;
 
-import com.portfolioprj.humanresourcemanagementapi.domain.Department;
+import com.portfolioprj.humanresourcemanagementapi.DAO.Department;
 import com.portfolioprj.humanresourcemanagementapi.helpers.exceptions.HRDeptBadRequestException;
 import com.portfolioprj.humanresourcemanagementapi.helpers.exceptions.HRDeptResourceNotFoundException;
 import com.portfolioprj.humanresourcemanagementapi.repository.DepartmentRepository;
@@ -28,7 +28,7 @@ public class DepartmentServiceImpl implements DepartmentService{
 
     @Override
     public Department fetchDepartmentById(Integer emplid, Integer department_id) throws HRDeptResourceNotFoundException {
-        return null;
+        return departmentRepository.findDeptById(emplid, department_id);
     }
 
     @Override
