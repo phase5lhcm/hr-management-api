@@ -23,7 +23,8 @@ public class DepartmentServiceImpl implements DepartmentService{
 
     @Override
     public List<Department> fetchAllDepartments(Integer emplid) {
-        return null;
+        System.out.println("here " + departmentRepository.findAllDepartments(emplid));
+        return departmentRepository.findAllDepartments(emplid);
     }
 
     @Override

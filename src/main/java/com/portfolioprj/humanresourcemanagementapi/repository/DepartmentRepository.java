@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface DepartmentRepository {
 
-    List<Department> findAllDepartments(Integer userId) throws HRDeptResourceNotFoundException;
+    List<Department> findAllDepartments(Integer emplid) throws HRDeptResourceNotFoundException;
 
     Department findDeptById(Integer emplid, Integer department_id) throws HRDeptResourceNotFoundException;
 

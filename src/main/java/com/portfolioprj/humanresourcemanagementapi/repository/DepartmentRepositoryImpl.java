@@ -4,6 +4,7 @@ import com.portfolioprj.humanresourcemanagementapi.DAO.Department;
 import com.portfolioprj.humanresourcemanagementapi.helpers.exceptions.HRDeptBadRequestException;
 import com.portfolioprj.humanresourcemanagementapi.helpers.exceptions.HRDeptResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -28,7 +29,7 @@ public class DepartmentRepositoryImpl implements DepartmentRepository{
 
     @Override
     public List<Department> findAllDepartments(Integer emplid) throws HRDeptResourceNotFoundException {
-        return null;
+        return jdbcTemplate.query(QUERIES.SQL_FIND_ALL_DEPARTMENTS, departmentRowMapper, emplid);
     }
 
     @Override

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -21,13 +22,11 @@ public class DepartmentResource {
     }
 
     @GetMapping(" ")
-    public String getAllDepartments(HttpServletRequest request){
-        Integer emplID = (Integer) request.getAttribute("emplid");
-        if(emplID != null){
-            return "Authentication success. Employee id: " + emplID;
-        } else{
-            throw new RuntimeException("An authorized user must be logged in to access this resource");
-        }
+    public ResponseEntity<List<Department>> getAllDepartments(HttpServletRequest request){
+        int authorizedUserId = (Integer) request.getAttribute("emplid");
+        List<Department> departmentList = departmentService.fetchAllDepartments(authorizedUserId);
+        System.out.println("list " + departmentList);
+        return new ResponseEntity<>(departmentList, HttpStatus.OK);
     }
 
     @GetMapping("/{departmentId}")
