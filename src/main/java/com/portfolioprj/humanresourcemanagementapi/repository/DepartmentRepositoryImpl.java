@@ -29,8 +29,8 @@ public class DepartmentRepositoryImpl implements DepartmentRepository{
     }
 
     @Override
-    public List<Department> findAllDepartments(Integer emplid) throws HRDeptResourceNotFoundException {
-        return jdbcTemplate.query(QUERIES.SQL_FIND_ALL_DEPARTMENTS, departmentRowMapper, emplid);
+    public List<Department> findAllDepartments() throws HRDeptResourceNotFoundException {
+        return jdbcTemplate.query(QUERIES.SQL_FIND_ALL_DEPARTMENTS, departmentRowMapper);
     }
 
     @Override
@@ -77,10 +77,11 @@ public class DepartmentRepositoryImpl implements DepartmentRepository{
     @Override
     public void updateDeptInfo(Integer emplid, Integer dept_id, Department department) throws HRDeptBadRequestException {
         try{
-            jdbcTemplate.update(QUERIES.SQL_UPDATE_DEPARTMENT, emplid, dept_id, department.getTitle(), department.getDescription());
+            jdbcTemplate.update(QUERIES.SQL_UPDATE_DEPARTMENT,
+                    department.getTitle(), department.getDescription(),emplid, dept_id);
 
-        } catch (Exception e){
-            throw new HRDeptBadRequestException("Invalid request");
+        } catch (DataAccessException e){
+            throw new HRDeptBadRequestException(e.getMessage());
         }
 
     }

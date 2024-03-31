@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface DepartmentService {
 
-    List<Department> fetchAllDepartments(Integer emplid);
+    List<Department> fetchAllDepartments();
 
     Department fetchDepartmentById(Integer emplid, Integer department_id) throws HRDeptResourceNotFoundException;
 

@@ -22,14 +22,6 @@ public class DepartmentResource {
         this.departmentService = departmentService;
     }
 
-    @GetMapping(" ")
-    public ResponseEntity<List<Department>> getAllDepartments(HttpServletRequest request){
-        int authorizedUserId = (Integer) request.getAttribute("emplid");
-        List<Department> departmentList = departmentService.fetchAllDepartments(authorizedUserId);
-        System.out.println("list " + departmentList);
-        return new ResponseEntity<>(departmentList, HttpStatus.OK);
-    }
-
     @GetMapping("/{departmentId}")
     public ResponseEntity<Department> getDepartmentById(HttpServletRequest request,
                                                         @PathVariable("departmentId") Integer departmentId){

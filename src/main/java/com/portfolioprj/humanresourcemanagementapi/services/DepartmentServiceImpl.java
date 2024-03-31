@@ -22,9 +22,9 @@ public class DepartmentServiceImpl implements DepartmentService{
     }
 
     @Override
-    public List<Department> fetchAllDepartments(Integer emplid) {
+    public List<Department> fetchAllDepartments() {
         System.out.println("here " );
-        return departmentRepository.findAllDepartments(emplid);
+        return departmentRepository.findAllDepartments();
     }
 
     @Override
