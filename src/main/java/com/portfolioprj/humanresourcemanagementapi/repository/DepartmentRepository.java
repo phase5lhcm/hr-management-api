@@ -17,7 +17,7 @@ public interface DepartmentRepository {
 
     Integer createDept(String title, String description, Integer dept_head, Integer userId) throws HRDeptBadRequestException;
 
-    void updateDeptInfo(Integer userId, Integer department_id, Department department) throws HRDeptBadRequestException;
+    void updateDeptInfo(Integer emplid, Integer department_id, Department department) throws HRDeptBadRequestException;
 
     void removeDeptById(Integer userId, Integer department_id) throws HRDeptResourceNotFoundException;
 }

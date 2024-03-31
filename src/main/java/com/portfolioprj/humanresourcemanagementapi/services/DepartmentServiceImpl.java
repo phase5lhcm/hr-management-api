@@ -23,7 +23,7 @@ public class DepartmentServiceImpl implements DepartmentService{
 
     @Override
     public List<Department> fetchAllDepartments(Integer emplid) {
-        System.out.println("here " + departmentRepository.findAllDepartments(emplid));
+        System.out.println("here " );
         return departmentRepository.findAllDepartments(emplid);
     }
 
@@ -40,7 +40,7 @@ public class DepartmentServiceImpl implements DepartmentService{
 
     @Override
     public void updateDepartment(Integer emplid, Integer dept_id, Department department) throws HRDeptBadRequestException {
-
+        departmentRepository.updateDeptInfo(emplid, dept_id, department);
     }
 
     @Override

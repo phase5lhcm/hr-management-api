@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,5 +48,16 @@ public class DepartmentResource {
         int emplid = (Integer) request.getAttribute("emplid");
         Department department = departmentService.addDepartment(title, desc, dept_head, emplid);
         return new ResponseEntity<>(department, HttpStatus.CREATED);
+    }
+
+  @PutMapping("update/{departmentId}")
+   public  ResponseEntity<Map<String, Boolean>> updateDepartment(HttpServletRequest request,
+                                                              @PathVariable("departmentId") Integer departmentId,
+                                                              @RequestBody Department department){
+        int emplid = (Integer) request.getAttribute("emplid");
+        departmentService.updateDepartment(emplid, departmentId, department);
+        Map<String, Boolean> map = new HashMap<>();
+        map.put("success", true);
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 }

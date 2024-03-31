@@ -5,6 +5,7 @@ import com.portfolioprj.humanresourcemanagementapi.helpers.exceptions.HRDeptBadR
 import com.portfolioprj.humanresourcemanagementapi.helpers.exceptions.HRDeptResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -36,9 +37,15 @@ public class DepartmentRepositoryImpl implements DepartmentRepository{
     public Department findDeptById(Integer emplid, Integer dept_id) throws HRDeptResourceNotFoundException {
         try {
             return jdbcTemplate.queryForObject(QUERIES.SQL_FIND_DEPT_BY_ID, departmentRowMapper, emplid, dept_id);
+        } catch (EmptyResultDataAccessException e) {
+            // For now, only matching dept heads can access their department info
+            throw new HRDeptResourceNotFoundException("You are unauthorized to access this resource");
+        } catch (DataAccessException e) {
+            // Handle database access errors
+            throw new HRDeptResourceNotFoundException("Error accessing database");
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new HRDeptResourceNotFoundException("Dept not found with this id");
+            // Handle other unexpected exceptions
+            throw new HRDeptResourceNotFoundException("An unexpected error occurred");
         }
     }
 
@@ -69,6 +76,12 @@ public class DepartmentRepositoryImpl implements DepartmentRepository{
 
     @Override
     public void updateDeptInfo(Integer emplid, Integer dept_id, Department department) throws HRDeptBadRequestException {
+        try{
+            jdbcTemplate.update(QUERIES.SQL_UPDATE_DEPARTMENT, emplid, dept_id, department.getTitle(), department.getDescription());
+
+        } catch (Exception e){
+            throw new HRDeptBadRequestException("Invalid request");
+        }
 
     }
 
