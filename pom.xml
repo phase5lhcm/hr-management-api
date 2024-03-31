@@ -60,6 +60,7 @@
 			<artifactId>jaxb-api</artifactId>
 			<version>2.3.1</version> <!-- Use the appropriate version -->
 		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -68,7 +69,23 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.liquibase</groupId>
+				<artifactId>liquibase-core</artifactId>
+				<version>4.24.0</version>
+				<configuration>
+					<propertyFile>src/main/resources/liquibase.properties</propertyFile>
+					<changeLogFile>src/main/resources/CHANGELOG.sql</changeLogFile>
+					<url>jdbc:postgresql://localhost:5432/hrmanagementdb</url>
+					<username>administrator</username>
+					<password>password</password>
+					<!-- Specify the database driver -->
+					<driver>org.postgresql.Driver</driver>
+				</configuration>
+			</plugin>
 		</plugins>
+
 	</build>
+
 
 </project>
