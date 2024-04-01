@@ -87,7 +87,15 @@ public class DepartmentRepositoryImpl implements DepartmentRepository{
     }
 
     @Override
-    public void removeDeptById(Integer emplid, Integer dept_id) throws HRDeptResourceNotFoundException {
+    public void deleteDeptById(Integer emplid, Integer dept_id) throws HRDeptResourceNotFoundException {
+        try{
+            int rowsAffected = jdbcTemplate.update(QUERIES.SQL_DELETE_DEPARTMENT, emplid, dept_id);
+            if (rowsAffected == 0) {
+                throw new HRDeptResourceNotFoundException("Department with id " + dept_id + " not found for employee with id " + emplid);
+            }
+        } catch (DataAccessException e) {
+            throw new HRDeptBadRequestException("Error occurred while deleting department: " + e.getMessage());
+        }
 
     }
 

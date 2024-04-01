@@ -1,6 +1,8 @@
 package com.portfolioprj.humanresourcemanagementapi.resources;
 
 import com.portfolioprj.humanresourcemanagementapi.DAO.Department;
+import com.portfolioprj.humanresourcemanagementapi.helpers.exceptions.HRDeptBadRequestException;
+import com.portfolioprj.humanresourcemanagementapi.helpers.exceptions.HRDeptResourceNotFoundException;
 import com.portfolioprj.humanresourcemanagementapi.services.DepartmentService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,4 +55,32 @@ public class DepartmentResource {
         map.put("success", true);
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
+
+    @DeleteMapping("delete/{departmentId}")
+    public ResponseEntity<Map<String, Boolean>> deleteDepartment(HttpServletRequest request,
+                                                                 @PathVariable("departmentId") Integer departmentId) {
+        try {
+            Integer emplid = (Integer) request.getAttribute("emplid");
+            if (emplid == null) {
+                throw new HRDeptBadRequestException("Employee ID not found in the request");
+            }
+
+            departmentService.deleteDepartment(emplid, departmentId);
+            Map<String, Boolean> map = Collections.singletonMap("success", true);
+            return ResponseEntity.ok(map);
+        } catch (HRDeptResourceNotFoundException e) {
+            // Handle resource not found exception
+            Map<String, Boolean> map = Collections.singletonMap("success", false);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(map);
+        } catch (HRDeptBadRequestException e) {
+            // Handle bad request exception
+            Map<String, Boolean> map = Collections.singletonMap("success", false);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(map);
+        } catch (Exception e) {
+            // Handle other unexpected exceptions
+            Map<String, Boolean> map = Collections.singletonMap("success", false);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(map);
+        }
+    }
+
 }

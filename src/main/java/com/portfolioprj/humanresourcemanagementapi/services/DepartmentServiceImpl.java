@@ -45,6 +45,7 @@ public class DepartmentServiceImpl implements DepartmentService{
 
     @Override
     public void deleteDepartment(Integer emplid, Integer dept_id) throws HRDeptResourceNotFoundException {
+        departmentRepository.deleteDeptById(emplid, dept_id);
 
     }
 }
